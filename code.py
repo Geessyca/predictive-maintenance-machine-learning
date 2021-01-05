@@ -3,18 +3,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-telemetry = pd.read_csv('PdM_telemetry.csv')
-errors = pd.read_csv('PdM_errors.csv')
-maint = pd.read_csv('PdM_maint.csv')
-failures = pd.read_csv('PdM_failures.csv')
-machines = pd.read_csv('PdM_machines.csv')
+telemetry = pd.read_csv('https://azuremlsampleexperiments.blob.core.windows.net/datasets/PdM_telemetry.csv')
+errors = pd.read_csv('https://azuremlsampleexperiments.blob.core.windows.net/datasets/PdM_errors.csv')
+maint = pd.read_csv('https://azuremlsampleexperiments.blob.core.windows.net/datasets/PdM_maint.csv')
+failures = pd.read_csv('https://azuremlsampleexperiments.blob.core.windows.net/datasets/PdM_failures.csv')
+machines = pd.read_csv('https://azuremlsampleexperiments.blob.core.windows.net/datasets/PdM_machines.csv')
 
-#trabalhando os dados
-    #telemetry
-    #errors
-    #maint
-    #failures
-    #machines
 #Alterar dados refrente a data e hora
 telemetry['datetime'] = pd.to_datetime(telemetry['datetime'], format="%Y-%m-%d %H:%M:%S")
 errors['datetime'] = pd.to_datetime(errors['datetime'], format="%Y-%m-%d %H:%M:%S")
@@ -30,10 +24,9 @@ failures.isnull().sum()
 machines.isnull().sum()
 
 #substituindo pelo valor  - NÃO TEVE NECESSIDADE
-    #dadomedio = df['dado'].mean()
-    #dadomedio = math.floor (dadomedio)
-
-    #df.update(df['dado'].fillna(dadomedio))
+    #voltmean = telemetry['volt'].mean()
+    #voltmean = math.floor (voltmean)
+    #telemetry.update(telemetry['volt'].fillna(voltmean))
     
 #Telemetry gráficos 1º ano
 
@@ -135,7 +128,7 @@ plt.figure(figsize=(8, 4))
 maint['comp'].value_counts().plot(kind='bar')
 plt.ylabel('Nº de componentes')
 
-##Recursos de atraso de 3 horas
+#Recursos de atraso de 3 horas
 temp = []
 fields = ['volt', 'rotate', 'pressure', 'vibration']
 for col in fields:
@@ -182,15 +175,3 @@ for col in fields:
 telemetrysd_24hrs = pd.concat(temp, axis=1)
 telemetrysd_24hrs.columns = [i + 'sd_24h' for i in fields]
 telemetrysd_24hrs.reset_index(inplace=True)
-
-#Mesclar os recursos anteriores
-
-telemetryfeat = [telemetrymean,telemetrysd]
-
-
-
-
-
-
-
-
