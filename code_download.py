@@ -131,6 +131,7 @@ maint['comp'].value_counts().plot(kind='bar')
 plt.ylabel('Nº de componentes')
 
 #Recursos de atraso de 3 horas
+
 temp = []
 fields = ['volt', 'rotate', 'pressure', 'vibration']
 for col in fields:
@@ -144,6 +145,10 @@ telemetrymean = pd.concat(temp, axis=1)
 telemetrymean.columns = [i + 'mean_3h' for i in fields]
 telemetrymean.reset_index(inplace=True)
 
+
+
+temp = []
+fields = ['volt', 'rotate', 'pressure', 'vibration']
 for col in fields:
     temp.append(pd.pivot_table(telemetry,
                                index='datetime',
@@ -151,29 +156,39 @@ for col in fields:
                                values=col).rolling(window=3).std().resample('3H',
                                                                              closed='left',
                                                                              label='right').std().unstack())
-telemetrysd  = pd.concat(temp, axis=1)
+telemetrysd = pd.concat(temp, axis=1)
 telemetrysd.columns = [i + 'sd_3h' for i in fields]
 telemetrysd.reset_index(inplace=True)
 
+
+
+
 #Recursos de atraso de 24 horas
+temp = []
+fields = ['volt', 'rotate', 'pressure', 'vibration']
 for col in fields:
     temp.append(pd.pivot_table(telemetry,
                                index='datetime',
                                columns='machineID',
-                               values=col).rolling(window=24).mean().resample('24H',
+                               values=col).rolling(window=24).mean().resample('3H',
                                                                               closed='left',
                                                                               label='right').mean().unstack())
 telemetrymean_24hrs = pd.concat(temp, axis=1)
 telemetrymean_24hrs.columns = [i + 'mean_24h' for i in fields]
 telemetrymean_24hrs.reset_index(inplace=True)
+telemetrymean_24hrs = telemetrymean_24hrs.loc[-telemetrymean_24hrs['voltmean_24h'].isnull()]
 
+
+temp = []
+fields = ['volt', 'rotate', 'pressure', 'vibration']
 for col in fields:
     temp.append(pd.pivot_table(telemetry,
                                index='datetime',
                                columns='machineID',
-                               values=col).rolling(window=24).std().resample('24H',
+                               values=col).rolling(window=24).std().resample('3H',
                                                                              closed='left',
                                                                              label='right').std().unstack())
 telemetrysd_24hrs = pd.concat(temp, axis=1)
 telemetrysd_24hrs.columns = [i + 'sd_24h' for i in fields]
 telemetrysd_24hrs.reset_index(inplace=True)
+telemetrysd_24hrs = telemetrysd_24hrs.loc[-telemetrysd_24hrs['voltsd_24h'].isnull()]
