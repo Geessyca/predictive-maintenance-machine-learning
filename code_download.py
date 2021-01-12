@@ -107,7 +107,7 @@ plt.ylabel('Nº de erros')
 
 sns.set_style("darkgrid")
 plt.figure(figsize=(8, 6))
-_, bins, _ = plt.hist([machines.loc[machines['model'] == 'model1', 'age'],
+machinesplot = plt.hist([machines.loc[machines['model'] == 'model1', 'age'],
                        machines.loc[machines['model'] == 'model2', 'age'],
                        machines.loc[machines['model'] == 'model3', 'age'],
                        machines.loc[machines['model'] == 'model4', 'age']],
