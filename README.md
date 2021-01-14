@@ -218,4 +218,162 @@ plt.ylabel('Nº de componentes')
 ```
 ![Maint](https://user-images.githubusercontent.com/72661229/104624144-fe240a00-5671-11eb-9a7e-8129d84c1394.png)
 
+<h2>Recursos de atraso da telemetria</h2>
+
+<h4>Recursos de atraso da telemetria curto com janela de 3hrs</h4>
+
+<h5>Média Móvel</h5>
+
+```
+temp = []
+fields = ['volt', 'rotate', 'pressure', 'vibration']
+for col in fields:
+    temp.append(pd.pivot_table(telemetry,
+                               index='datetime',
+                               columns='machineID',
+                               values=col).rolling(window=3).mean().resample('3H',
+                                                                              closed='left',
+                                                                              label='right').mean().unstack())
+telemetrymean = pd.concat(temp, axis=1)
+telemetrymean.columns = [i + 'mean_3h' for i in fields]
+telemetrymean.reset_index(inplace=True)
+```
+
+<h5>Desvio Padrão</h5>
+
+```
+temp = []
+fields = ['volt', 'rotate', 'pressure', 'vibration']
+for col in fields:
+    temp.append(pd.pivot_table(telemetry,
+                               index='datetime',
+                               columns='machineID',
+                               values=col).rolling(window=3).std().resample('3H',
+                                                                             closed='left',
+                                                                             label='right').std().unstack())
+telemetrysd = pd.concat(temp, axis=1)
+telemetrysd.columns = [i + 'sd_3h' for i in fields]
+telemetrysd.reset_index(inplace=True)
+```
+
+
+<h4>Recursos de atraso da telemetria curto longo com janela de 24hrs</h4>
+<h5>Média Móvel</h5>
+
+```
+temp = []
+fields = ['volt', 'rotate', 'pressure', 'vibration']
+for col in fields:
+    temp.append(pd.pivot_table(telemetry,
+                               index='datetime',
+                               columns='machineID',
+                               values=col).rolling(window=24).mean().resample('3H',
+                                                                              closed='left',
+                                                                              label='right').mean().unstack())
+telemetrymean_24hrs = pd.concat(temp, axis=1)
+telemetrymean_24hrs.columns = [i + 'mean_24h' for i in fields]
+telemetrymean_24hrs.reset_index(inplace=True)
+telemetrymean_24hrs = telemetrymean_24hrs.loc[-telemetrymean_24hrs['voltmean_24h'].isnull()]
+```
+
+<h5>Desvio Padrão</h5>
+
+```
+temp = []
+fields = ['volt', 'rotate', 'pressure', 'vibration']
+for col in fields:
+    temp.append(pd.pivot_table(telemetry,
+                               index='datetime',
+                               columns='machineID',
+                               values=col).rolling(window=24).std().resample('3H',
+                                                                             closed='left',
+                                                                             label='right').std().unstack())
+telemetrysd_24hrs = pd.concat(temp, axis=1)
+telemetrysd_24hrs.columns = [i + 'sd_24h' for i in fields]
+telemetrysd_24hrs.reset_index(inplace=True)
+telemetrysd_24hrs = telemetrysd_24hrs.loc[-telemetrysd_24hrs['voltsd_24h'].isnull()]
+
+```
+
+<h4>Mesclar os dados acima</h4>
+
+```
+telemetry_feat  =  pd.concat ([ telemetrymean ,
+                             telemetrysd.iloc [:, 2 : 6 ],
+                             telemetrymean_24hrs.iloc [:, 2 : 6 ],
+                             telemetrysd_24hrs.iloc [:, 2 : 6 ]], axis = 1 ).dropna ()
+```
+
+<h4>Recursos de atraso de errors com janela de 24hrs</h4>
+<h6>
+```
+error_count = pd.get_dummies(errors.set_index('datetime')).reset_index()
+error_count.columns = ['datetime', 'machineID', 'error1', 'error2', 'error3', 'error4', 'error5']
+error_count = error_count.groupby(['machineID','datetime']).sum().reset_index()
+error_count = telemetry[['datetime', 'machineID']].merge(error_count, on=['machineID', 'datetime'], how='left').fillna(0.0)
+
+temp = []
+fields = ['error%d' % i for i in range(1,6)]
+for col in fields:
+    temp.append(pd.pivot_table(error_count.rolling(window=24,center=False).sum()).resample('3H',
+                                                                                           closed='left',
+                                                                                           label='right',
+                                                                                           how='first').first())
+error_count = pd.concat(temp, axis=1)
+error_count.columns = [i + 'count' for i in fields]
+error_count.reset_index(inplace=True)
+error_count = error_count.dropna()
+</h6>
+
+<h2>Dias desde a última substituição da manutenção</h2>
+
+```
+# crie uma coluna para cada tipo de erro 
+
+comp_rep = pd.get_dummies(maint.set_index('datetime')).reset_index()
+comp_rep.columns = ['datetime', 'machineID', 'comp1', 'comp2', 'comp3', 'comp4']
+
+# combina reparos para uma determinada máquina em uma determinada hora 
+comp_rep = comp_rep.groupby(['machineID', 'datetime']).sum().reset_index()
+
+# adicionar pontos de tempo onde nenhum componente foi substituído 
+comp_rep = telemetry[['datetime', 'machineID']].merge(comp_rep,
+                                                      on=['datetime', 'machineID'],
+                                                      how='outer').fillna(0).sort_values(by=['machineID', 'datetime'])
+
+components = ['comp1', 'comp2', 'comp3', 'comp4']
+for comp in components:
+     # converter o indicador para a data mais recente de alteração do componente 
+    comp_rep.loc[comp_rep[comp] < 1, comp] = None
+    comp_rep.loc[-comp_rep[comp].isnull(), comp] = comp_rep.loc[-comp_rep[comp].isnull(), 'datetime']
+    
+    # forward-fill a data mais recente da alteração do componente 
+    comp_rep[comp] = comp_rep[comp].fillna(method='ffill')
+
+# remove as datas em 2014 (pode ter NaN ou datas de mudança de componente futura)     
+comp_rep = comp_rep.loc[comp_rep['datetime'] > pd.to_datetime('2015-01-01')]
+
+# substitua as datas da mudança de componente mais recente por dias desde a mudança de componente mais recente 
+for comp in components:
+    comp_rep[comp] = (comp_rep["datetime"] - pd.to_datetime(comp_rep[comp])) / np.timedelta64(1, "D") 
+
+```
+
+<h2>Características da máquina</h2>
+
+```
+final_feat = telemetry_feat.merge(error_count, on=['datetime', 'machineID'], how='left')
+final_feat = final_feat.merge(comp_rep, on=['datetime', 'machineID'], how='left')
+final_feat = final_feat.merge(machines, on=['machineID'], how='left')
+```
+
+<h2>Construção de etiqueta</h2>
+
+```
+labeled_features = final_feat.merge(failures, on=['datetime', 'machineID'], how='left')
+labeled_features = labeled_features.fillna(method='bfill', limit=7) # fill backward up to 24h
+labeled_features = labeled_features.fillna('none')
+```
+
+
 
