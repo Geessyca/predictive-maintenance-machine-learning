@@ -185,11 +185,35 @@ plt.ylabel('Nº de componentes')
 ```
 ![Maint](https://user-images.githubusercontent.com/72661229/104624144-fe240a00-5671-11eb-9a7e-8129d84c1394.png)
 
+<h2>Verificação de dados ausentes nos dados</h2>
+```
+telemetry.isnull().sum()
+```
 
+![isnulltelemetry](https://user-images.githubusercontent.com/72661229/104637826-100ea880-5684-11eb-8b48-b84e0fd88f8c.png)
 
+```
+errors.isnull().sum()
+```
 
+![isnullerrors](https://user-images.githubusercontent.com/72661229/104637830-10a73f00-5684-11eb-9566-76b8f785c43b.png)
 
+```
+maint.isnull().sum()
+```
 
+![isnullmaint](https://user-images.githubusercontent.com/72661229/104637825-100ea880-5684-11eb-8fda-e54d2a0d6439.png)
 
+```
+failures.isnull().sum()
+```
 
+![isnullfailure](https://user-images.githubusercontent.com/72661229/104637831-113fd580-5684-11eb-9197-2738151b28ef.png)
 
+```
+machines.isnull().sum()
+```
+
+![isnullmachine](https://user-images.githubusercontent.com/72661229/104637823-0f761200-5684-11eb-9575-cd24ddf6f4ff.png)
+
+Em nenhum dos bancos de dados possui dados ausentes
