@@ -13,14 +13,43 @@ https://azuremlsampleexperiments.blob.core.windows.net/datasets/PdM_machines.csv
 <h2>Descrição dos dados:</h2>
 
 <b>Telemetry:</b> Dados da série temporal de telemetria, que consistem em medições de tensão, rotação, pressão e vibração coletadas de 100 máquinas em tempo real, calculadas em média a cada hora coletada.
+```
+telemetry = pd.read_csv('PdM_telemetry.csv')
+telemetry['datetime'] = pd.to_datetime(telemetry['datetime'], format="%Y-%m-%d %H:%M:%S")
+telemetry.head()
+```
+![dadostelemetry](https://user-images.githubusercontent.com/72661229/104634253-21a18180-567f-11eb-9054-91c46802e698.png)
 
 <b>Errors:</b> Erros ininterruptos lançados enquanto a máquina ainda está operacional e não constituem falhas. A data e as horas do erro são arredondadas para a hora mais próxima, pois os dados de telemetria são coletados por hora.
+```
+errors = pd.read_csv('PdM_errors.csv')
+errors['datetime'] = pd.to_datetime(errors['datetime'], format="%Y-%m-%d %H:%M:%S")
+errors.head()
+```
+![dadoserrors](https://user-images.githubusercontent.com/72661229/104633919-a50ea300-567e-11eb-9248-74e4291b8de6.png)
 
 <b>Maint:</b> Registros de manutenção programada e não programada que correspondem tanto à inspeção regular dos componentes quanto às falhas. Um registro é gerado se um componente for substituído durante a inspeção programada ou substituído devido a uma avaria. Os registros criados devido a falhas serão chamados de falhas, o que é explicado nas seções posteriores.
+```
+maint = pd.read_csv('PdM_maint.csv')
+maint['datetime'] = pd.to_datetime(maint['datetime'], format="%Y-%m-%d %H:%M:%S")
+maint.head()
+```
+![dadosmaint](https://user-images.githubusercontent.com/72661229/104634242-1ea69100-567f-11eb-8bf7-79ac3b9e3730.png)
 
 <b>Machines:</b> Informações sobre as máquinas como de modelo e idade (anos de serviço).
+```
+machines = pd.read_csv('PdM_machines.csv')
+machines.head()
+```
+![dadosmachine](https://user-images.githubusercontent.com/72661229/104635427-a345df00-5680-11eb-9b86-889a40811725.png)
 
 <b>Failures:</b> Substituições de componentes devido a falhas. Cada registro possui uma data e hora, ID de máquina e tipo de componente com falha.
+```
+failures = pd.read_csv('PdM_failures.csv')
+failures['datetime'] = pd.to_datetime(failures['datetime'], format="%Y-%m-%d %H:%M:%S")
+failures.head()
+```
+![dadosfailures](https://user-images.githubusercontent.com/72661229/104634236-1e0dfa80-567f-11eb-953c-d65b8af2ca01.png)
 
 <h2>Exibição gráfica dos dados:</h2>
 
