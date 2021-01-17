@@ -434,6 +434,8 @@ plt.bar(range(len(importances)), importances)
 plt.ylabel('Importance')
 ```
 
+![treinamento](https://user-images.githubusercontent.com/72661229/104853205-14360280-58de-11eb-99ef-1ca260aa32a9.png)
+
 <h2>Avaliação</h2>
 
 ```
@@ -443,7 +445,11 @@ plt.figure(figsize=(8, 4))
 labeled_features['failure'].value_counts().plot(kind='bar')
 plt.xlabel('Component failing')
 plt.ylabel('Count')
+```
 
+![avaliação](https://user-images.githubusercontent.com/72661229/104853211-1bf5a700-58de-11eb-824f-bd282122f391.png)
+
+```
 from sklearn.metrics import confusion_matrix, recall_score, accuracy_score, precision_score
 
 def Evaluate(predicted, actual, labels):
@@ -545,3 +551,6 @@ for i, test_result in enumerate(test_results):
                                  labels = ['none', 'comp1', 'comp2', 'comp3', 'comp4'])
     evaluation_results.append(evaluation_result)
 ```
+![avaliação_1](https://user-images.githubusercontent.com/72661229/104857893-4ead9880-58fa-11eb-8a9d-b4109629be59.png)
+
+![avaliação_2](https://user-images.githubusercontent.com/72661229/104857890-4e150200-58fa-11eb-98a2-4b192e143ba1.png)
