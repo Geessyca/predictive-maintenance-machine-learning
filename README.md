@@ -323,19 +323,7 @@ error_count = telemetry[['datetime', 'machineID']].merge(error_count, on=['machi
 
 ![errors_head](https://user-images.githubusercontent.com/72661229/104851466-e946b100-58d3-11eb-83b5-e43ae57ab1a5.png)
 
-<h6> Dando error, reafazer!!
-temp = []
-fields = ['error%d' % i for i in range(1,6)]
-for col in fields:
-    temp.append(pd.pivot_table(error_count.rolling(window=24,center=False).sum()).resample('3H',
-                                                                                           closed='left',
-                                                                                           label='right',
-                                                                                           how='first').first())
-error_count = pd.concat(temp, axis=1)
-error_count.columns = [i + 'count' for i in fields]
-error_count.reset_index(inplace=True)
-error_count = error_count.dropna()
-</h6>
+--->
 
 <h2>Dias desde a última substituição da manutenção</h2>
 
