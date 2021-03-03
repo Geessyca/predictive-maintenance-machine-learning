@@ -314,6 +314,7 @@ telemetry_feat  =  pd.concat ([ telemetrymean ,
 ![telemetry_feat](https://user-images.githubusercontent.com/72661229/104851342-35452600-58d3-11eb-9c3e-823fe734cef0.png)
 
 <h4>Recursos de atraso de errors com janela de 24hrs</h4>
+
 ```
 error_count = pd.get_dummies(errors.set_index('datetime')).reset_index()
 error_count.columns = ['datetime', 'machineID', 'error1', 'error2', 'error3', 'error4', 'error5']
