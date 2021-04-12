@@ -33,7 +33,7 @@ from sklearn.metrics import accuracy_score
 ```
 
 
-<h3>Usando GaussianNB<\h3>
+<h3>Usando GaussianNB</h3>
 
 
 
