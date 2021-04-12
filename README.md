@@ -225,9 +225,4 @@ print("\n")
     
     
     
-    
-
-
-```python
-
-```
+<h4>A Arvore de decisão apresentou melhor eficácia nos resudados</h4>
