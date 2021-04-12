@@ -100,46 +100,7 @@ print(accuracy_score(y_test, preds))
     
 <h3>ESCOLHA DA MELHOR PRECISÃO DE CLASSIFICAÇÃO</h3>
 
-```python
-
-import numpy as np
-X_test = np.array([[179.30315305501,499.777962383718,111.833027646993,52.3830967199205]])
-print("Linear SVC: ", model.predict( X_test ), "\nBanco de dados: comp4\n")
-print("Arvore de decisão: ",dtc.predict( X_test ), "\nBanco de dados: comp4\n")
-print("Vizinho + proximos: ", knn.predict( X_test ), "\nBanco de dados: comp4\n")
-print("Gaussian: ", gnb.predict( X_test ), "\nBanco de dados: comp4\n")
-print("\n")
-X_test = np.array([[198.257974581675,456.862342339469,89.3339950053984,38.6718999063224]])
-print("Linear SVC: ", model.predict( X_test ), "\nBanco de dados: comp1\n")
-print("Arvore de decisão: ",dtc.predict( X_test ), "\nBanco de dados: comp1\n")
-print("Vizinho + proximos: ", knn.predict( X_test ), "\nBanco de dados: comp1\n")
-print("Gaussian: ", gnb.predict( X_test ), "\nBanco de dados: comp1\n")
-print("\n")
-X_test = np.array([[180.050800888506,346.362480252293,105.661163515464,39.2180547849819]])
-print("Linear SVC: ", model.predict( X_test ), "\nBanco de dados: comp2\n")
-print("Arvore de decisão: ",dtc.predict( X_test ), "\nBanco de dados: comp2\n")
-print("Vizinho + proximos: ", knn.predict( X_test ), "\nBanco de dados: comp2\n")
-print("Gaussian: ", gnb.predict( X_test ), "\nBanco de dados: comp2\n")
-print("\n")
-X_test = np.array([[187.673963498493,493.005160103346,105.334392333578,53.9639607034682]])
-print("Linear SVC: ", model.predict( X_test ), "\nBanco de dados: comp4\n")
-print("Arvore de decisão: ",dtc.predict( X_test ), "\nBanco de dados: comp4\n")
-print("Vizinho + proximos: ", knn.predict( X_test ), "\nBanco de dados: comp4\n")
-print("Gaussian: ", gnb.predict( X_test ), "\nBanco de dados: comp4\n")
-print("\n")
-X_test = np.array([[205.275427905855,362.153175675405,108.623106487313,47.7113737781357]])
-print("Linear SVC: ", model.predict( X_test ), "\nBanco de dados: comp1\n")
-print("Arvore de decisão: ",dtc.predict( X_test ), "\nBanco de dados: comp1\n")
-print("Vizinho + proximos: ", knn.predict( X_test ), "\nBanco de dados: comp1\n")
-print("Gaussian: ", gnb.predict( X_test ), "\nBanco de dados: comp1\n")
-print("\n")
-X_test = np.array([[179.277874469449,322.388169957166,118.15393419358,47.4158846916956]])
-print("Linear SVC: ", model.predict( X_test ), "\nBanco de dados: comp2\n")
-print("Arvore de decisão: ",dtc.predict( X_test ), "\nBanco de dados: comp2\n")
-print("Vizinho + proximos: ", knn.predict( X_test ), "\nBanco de dados: comp2\n")
-print("Gaussian: ", gnb.predict( X_test ), "\nBanco de dados: comp2\n")
-print("\n")
-```    
+  
     
     Linear SVC:  ['0'] 
     Banco de dados: comp4
