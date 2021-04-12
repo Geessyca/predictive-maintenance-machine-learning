@@ -186,4 +186,4 @@ print(accuracy_score(y_test, preds))
     
     
     
-<h4>A Arvore de decisão apresentou melhor eficácia nos resudados</h4>
+<h4>A Arvore de decisão apresentou melhor eficácia nos resudados, 50%</h4>
