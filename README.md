@@ -1,4 +1,4 @@
-<h3>Treinamento e Validação das Classificações<\h3>
+<h3>Treinamento e Validação das Classificações</h3>
     
     
 ```python
@@ -49,7 +49,7 @@ print(accuracy_score(y_test, preds))
 
     0.9991198289953477
     
-<h3>Usando K-ésimo Vizinho mais Próximo<\h3>
+<h3>Usando K-ésimo Vizinho mais Próximo</h3>
 
 ```python
 from sklearn.neighbors import KNeighborsClassifier
@@ -66,7 +66,7 @@ print(accuracy_score(y_test, preds))
 
     0.9991617419003311
     
-<h3>Usando Arvore de Decisão<\h3>
+<h3>Usando Arvore de Decisão</h3>
 
 ```python
 from sklearn.tree import DecisionTreeClassifier
@@ -80,7 +80,7 @@ print(accuracy_score(y_test, preds))
 
     0.9983234838006623
     
-<h3>Usando Classificação do vetor de suporte linear.<\h3>
+<h3>Usando Classificação do vetor de suporte linear</h3>
 
 ```python
 from sklearn.svm import LinearSVC
@@ -98,7 +98,7 @@ print(accuracy_score(y_test, preds))
     0.9991617419003311
 
     
-<h3>ESCOLHA DA MELHOR PRECISÃO DE CLASSIFICAÇÃO<\h3>
+<h3>ESCOLHA DA MELHOR PRECISÃO DE CLASSIFICAÇÃO</h3>
 
 ```python
 
